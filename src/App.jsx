@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import TodoItem from './components/TodoItem';
 import AddTaskForm from './components/AddTaskForm';
+import Modal from './components/Modal';
 
 // Define INITIAL_TASK_LIST
 const INITIAL_TASK_LIST = [
@@ -13,11 +14,13 @@ const INITIAL_TASK_LIST = [
 function App() {
     // Use useState for taskList
     const [taskList, setTaskList] = useState(INITIAL_TASK_LIST);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // addTask function now accepts a name
     function addTask(name) {
         const newTask = { id: `todo-${nanoid()}`, name: name, completed: false };
         setTaskList([...taskList, newTask]);
+        setIsModalOpen(false); // Close modal on new task
     }
 
     // toggleTaskCompleted function
@@ -49,9 +52,29 @@ function App() {
         />
     ));
 
+    function openModal() {
+        setIsModalOpen(true);
+    }
+
+    function closeModal() {
+        setIsModalOpen(false);
+    }
+
     return (
         <main className="m-4"> {/* Tailwind: margin level 4 on all sides */}
-            <AddTaskForm onNewTask={addTask} />
+            <button 
+                onClick={openModal} 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+            >
+                Add Task
+            </button>
+            <Modal 
+                headerLabel="Add New Task" 
+                isOpen={isModalOpen} 
+                onCloseRequested={closeModal}
+            >
+                <AddTaskForm onNewTask={addTask} />
+            </Modal>
             <section>
                 <h1 className="text-xl font-bold">To do</h1>
                 <ul>
