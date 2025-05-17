@@ -1,15 +1,22 @@
 import React, { useRef } from 'react';
 
-function Modal(props) {
-  const dialogRef = useRef(null);
+interface ModalProps {
+  isOpen: boolean;
+  onCloseRequested: () => void;
+  headerLabel: string;
+  children: React.ReactNode;
+}
 
-  if (!props.isOpen) {
+function Modal({ isOpen, onCloseRequested, headerLabel, children }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  if (!isOpen) {
     return null;
   }
 
-  const handleOverlayClick = (event) => {
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      props.onCloseRequested();
+      onCloseRequested();
     }
   };
 
@@ -20,16 +27,16 @@ function Modal(props) {
     >
       <div ref={dialogRef} className="bg-white p-4 rounded w-1/3 border border-gray-500">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">{props.headerLabel}</h2>
+          <h2 className="text-lg font-semibold">{headerLabel}</h2>
           <button 
             aria-label="Close" 
             className="text-black" 
-            onClick={props.onCloseRequested}
+            onClick={onCloseRequested}
           >
             X
           </button>
         </div>
-        {props.children}
+        {children}
       </div>
     </div>
   );

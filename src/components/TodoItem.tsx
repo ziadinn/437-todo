@@ -1,7 +1,16 @@
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function TodoItem({ id, taskName, completed, onToggleCompleted, onDeleteTask }) {
+interface TodoItemProps {
+  id: string;
+  taskName: string;
+  completed: boolean;
+  onToggleCompleted: (id: string) => void;
+  onDeleteTask: (id: string) => void;
+}
+
+function TodoItem({ id, taskName, completed, onToggleCompleted, onDeleteTask }: TodoItemProps) {
     return (
         <li className="flex gap-4 items-center py-1">
             <label>
@@ -20,4 +29,4 @@ function TodoItem({ id, taskName, completed, onToggleCompleted, onDeleteTask }) 
     );
 }
 
-export default TodoItem;
+export default TodoItem; 

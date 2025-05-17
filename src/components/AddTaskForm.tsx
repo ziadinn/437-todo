@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-function AddTaskForm({ onNewTask }) {
-    const [name, setName] = useState("");
+interface AddTaskFormProps {
+  onNewTask: (name: string) => void;
+}
 
-    function handleSubmit(e) {
+function AddTaskForm({ onNewTask }: AddTaskFormProps) {
+    const [name, setName] = useState<string>("");
+
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (name.trim()) {
             onNewTask(name);
@@ -11,7 +15,7 @@ function AddTaskForm({ onNewTask }) {
         }
     }
 
-    function handleChange(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setName(e.target.value);
     }
 
@@ -31,4 +35,4 @@ function AddTaskForm({ onNewTask }) {
     );
 }
 
-export default AddTaskForm;
+export default AddTaskForm; 

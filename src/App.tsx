@@ -1,26 +1,33 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import TodoItem from './components/TodoItem';
-import AddTaskForm from './components/AddTaskForm';
-import Modal from './components/Modal';
+import TodoItem from './components/TodoItem.tsx';
+import AddTaskForm from './components/AddTaskForm.tsx';
+import Modal from './components/Modal.tsx';
 
-const INITIAL_TASK_LIST = [
+// Define the interface for a single task
+interface ITodoData {
+  id: string;
+  name: string;
+  completed: boolean;
+}
+
+const INITIAL_TASK_LIST: ITodoData[] = [
     { id: "todo-0", name: "Eat", completed: false },
     { id: "todo-1", name: "Sleep", completed: false },
     { id: "todo-2", name: "Repeat", completed: false }
 ];
 
 function App() {
-    const [taskList, setTaskList] = useState(INITIAL_TASK_LIST);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [taskList, setTaskList] = useState<ITodoData[]>(INITIAL_TASK_LIST);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    function addTask(name) {
-        const newTask = { id: `todo-${nanoid()}`, name: name, completed: false };
+    function addTask(name: string) {
+        const newTask: ITodoData = { id: `todo-${nanoid()}`, name: name, completed: false };
         setTaskList([...taskList, newTask]);
         setIsModalOpen(false);
     }
 
-    function toggleTaskCompleted(id) {
+    function toggleTaskCompleted(id: string) {
         const updatedTasks = taskList.map((task) => {
             if (id === task.id) {
                 return { ...task, completed: !task.completed };
@@ -30,7 +37,7 @@ function App() {
         setTaskList(updatedTasks);
     }
 
-    function deleteTask(id) {
+    function deleteTask(id: string) {
         const remainingTasks = taskList.filter((task) => id !== task.id);
         setTaskList(remainingTasks);
     }
@@ -79,4 +86,4 @@ function App() {
     );
 }
 
-export default App;
+export default App; 
