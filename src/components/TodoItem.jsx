@@ -1,13 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function TodoItem({ taskName }) {
+function TodoItem({ id, taskName, completed, onToggleCompleted, onDeleteTask }) {
     return (
-        <li className="flex gap-4">
+        <li className="flex gap-4 items-center py-1">
             <label>
-                <input type="checkbox"/> {taskName}
+                <input
+                    type="checkbox"
+                    checked={completed}
+                    onChange={() => onToggleCompleted(id)}
+                    className="mr-2"
+                />
+                {taskName}
             </label>
-            <button className="text-gray-600">
+            <button onClick={() => onDeleteTask(id)} className="text-gray-600 hover:text-red-600">
                 <FontAwesomeIcon icon={faTrash} title="Delete task" />
             </button>
         </li>
